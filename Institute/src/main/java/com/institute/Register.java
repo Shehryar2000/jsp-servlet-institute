@@ -42,8 +42,8 @@ public class Register extends HttpServlet {
 
 			out.println("<h3>Data Stored Successfully in Database</h3>\n");
 			out.println("<h4>Name: " + name + " </h4>");
-			out.println("<h4>Name: " + email + " </h4>");
-			out.println("<h4>Name: " + pass + " </h4>");
+			out.println("<h4>Email: " + email + " </h4>");
+			out.println("<h4>Password: " + pass + " </h4>");
 
 		} catch (Exception e) {
 			e.printStackTrace();

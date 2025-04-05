@@ -37,8 +37,7 @@
 
 						<div class='form center-align'>
 
-							<form action='Register' method='post'>
-
+							<form action='Register' method='post' id='myform'>
 
 								<input type='text' placeholder="Enter Username" name="user_name"
 									style="font-style: italic;" /> <input type='email'
@@ -84,11 +83,42 @@
 
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
 		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous">
+		
+	</script>
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			console.log("Page is Ready...")
+			console.log("Page is Ready...");
+			
+			$("#myform").on('submit',function(event){
+				
+				event.preventDefault();
+				
+				var f = $(this).serialize();
+				console.log(f);
+				
+				$.ajax({
+					
+					url : "Register",
+					data : f,
+					type : "POST",
+					
+					success : function(data, textStatus, jqXHR){
+						console.log("Data", data);
+						console.log("Successful...");
+					},
+					
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log("Data", data);
+						console.log("Error...");						
+					}
+					
+				})
+			
+				
+			})
+			
 		})
 	</script>
 
