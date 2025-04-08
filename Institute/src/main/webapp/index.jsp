@@ -34,10 +34,12 @@
 						<h3 style="margin-top: 10px;" class='center-align'>Registration
 							Form</h3>
 						<h6 class='center-align'>Institute of Science & Technology</h6>
+						<br />
+						<h5 class='center-align' id='msg'></h5>
 
 						<div class='form center-align'>
 
-							<form action='Register' method='post' id='myform'>
+							<form action='Register' method='post' id='myform' enctype="multipart/form-data">
 
 								<input type='text' placeholder="Enter Username" name="user_name"
 									style="font-style: italic;" /> <input type='email'
@@ -45,6 +47,15 @@
 									style="font-style: italic;" /> <input type='password'
 									placeholder="Enter Strong Password" name="user_pass"
 									style="font-style: italic;" />
+
+								<div class="file-field input-field">
+									<div class="btn">
+										<span>Upload File</span> <input name="image" type="file">
+									</div>
+									<div class="file-path-wrapper">
+										<input class="file-path validate" type="text">
+									</div>
+								</div>
 
 								<button type='submit' class='btn' style="margin-top: 20px">Sign
 									Up</button>
@@ -90,35 +101,61 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			console.log("Page is Ready...");
-			
-			$("#myform").on('submit',function(event){
-				
+
+			$("#myform").on('submit', function(event) {
+
 				event.preventDefault();
-				
-				var f = $(this).serialize();
-				console.log(f);
-				
+				//				var f = $(this).serialize();
+
+				var f = new FormData(this);
+				$(".loader").show();
+				$(".form").hide();
+
 				$.ajax({
-					
+
 					url : "Register",
 					data : f,
 					type : "POST",
-					
-					success : function(data, textStatus, jqXHR){
-						console.log("Data", data);
-						console.log("Successful...");
+
+					success : function(data, textStatus, jqXHR) {
+
+						$(".loader").hide();
+						$(".form").show();
+
+						console.log("Data: ", data.trim());
+						
+						if (data.trim() === 'done') {
+
+							$("#msg").html("Successfully Registered");
+							$("#msg").addClass("green-text");
+
+							$('#myform')[0].reset();
+
+						} else {
+
+							$("#msg").html("Something Went Wrong on Server");
+							$("#msg").addClass("red-text");
+
+						}
+
 					},
-					
-					error : function(jqXHR, textStatus, errorThrown){
-						console.log("Data", data);
-						console.log("Error...");						
-					}
-					
+
+					error : function(jqXHR, textStatus, errorThrown) {
+
+						$(".loader").hide();
+						$(".form").show();
+
+						$("#msg").html("Registration Failed");
+						$("#msg").addClass("red-text");
+					},
+
+					processData : false,
+					contentType : false
+
 				})
-			
-				
+
 			})
-			
+
 		})
 	</script>
 
